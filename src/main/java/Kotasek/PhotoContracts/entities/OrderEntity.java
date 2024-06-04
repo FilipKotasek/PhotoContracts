@@ -25,6 +25,8 @@ public class OrderEntity {
     private LocalDate orderDate;
 
     @ManyToOne
-    @JoinColumn(name = "package_id")
     private PackageEntity photoPackage;
+
+    @ManyToOne
+    private CustomerEntity customer;
 }
