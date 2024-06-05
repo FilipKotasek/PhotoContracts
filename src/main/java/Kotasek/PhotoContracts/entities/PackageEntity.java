@@ -27,6 +27,6 @@ public class PackageEntity {
     @Column(nullable = false)
     private Integer durationInHours;
 
-    @OneToMany
+    @OneToMany(mappedBy = "photoPackage")
     private List<OrderEntity> orders;
 }

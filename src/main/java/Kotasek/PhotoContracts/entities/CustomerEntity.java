@@ -27,7 +27,7 @@ public class CustomerEntity {
     @Column(nullable = false)
     private String address;
 
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     private List<OrderEntity> orders;
 
 }
