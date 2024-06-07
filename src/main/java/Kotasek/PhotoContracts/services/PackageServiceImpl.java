@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.image.PackedColorModel;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PackageServiceImpl implements PackageService{
@@ -31,5 +33,33 @@ public class PackageServiceImpl implements PackageService{
         packageRepository.deleteById(id);
         return deletedPackage;
 
+    }
+
+    @Override
+    public List<PackageDTO> getAllPackages() {
+        List<PackageEntity> packages=packageRepository.findAll();
+        List<PackageDTO> packageDTOS=new ArrayList<>();
+        for (PackageEntity onePackage: packages
+             ) {
+                packageDTOS.add(packageMapper.toDTO(onePackage));
+
+        }
+        return packageDTOS;
+    }
+
+    @Override
+    public PackageDTO getPackage(Long id) {
+        PackageEntity entity=packageRepository.getReferenceById(id);
+
+        return packageMapper.toDTO(entity);
+    }
+
+    @Override
+    public PackageDTO editPackage(Long id, PackageDTO newData) {
+        PackageEntity entity=packageRepository.getReferenceById(id);
+        PackageEntity newDataEntity=packageMapper.toEntity(newData);
+        newDataEntity.setId(entity.getId());
+        PackageDTO updatedData=packageMapper.toDTO(packageRepository.save(newDataEntity));
+        return updatedData;
     }
 }

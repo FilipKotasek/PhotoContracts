@@ -5,6 +5,8 @@ import Kotasek.PhotoContracts.services.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class PackageController {
@@ -26,6 +28,26 @@ public class PackageController {
         return packageService.deletePackage(id);
 
     }
+
+    @GetMapping("/packages")
+    public List<PackageDTO> getAllPackages() {
+
+        return packageService.getAllPackages();
+    }
+
+    @GetMapping("/package/{id}")
+    public PackageDTO getPackage(@PathVariable Long id) {
+        return packageService.getPackage(id);
+    }
+
+
+    @PutMapping("package/{id}")
+    public  PackageDTO editPackage(@PathVariable Long id, @RequestBody PackageDTO newData) {
+
+    return packageService.editPackage(id,newData);
+
+    }
+
 
 
 
