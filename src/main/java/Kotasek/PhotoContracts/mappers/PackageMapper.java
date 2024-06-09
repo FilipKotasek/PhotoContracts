@@ -4,7 +4,7 @@ import Kotasek.PhotoContracts.dto.PackageDTO;
 import Kotasek.PhotoContracts.entities.PackageEntity;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface PackageMapper {
 
     public PackageDTO toDTO(PackageEntity packageEntity);
