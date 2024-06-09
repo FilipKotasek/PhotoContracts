@@ -13,6 +13,8 @@ public interface PackageService {
 
     public List<PackageDTO> getAllPackages();
 
+    public List<PackageDTO> getFilteredPackages(int limit);
+
     public  PackageDTO getPackage(Long id);
 
     public PackageDTO editPackage(Long id,PackageDTO newData);

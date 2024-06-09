@@ -1,6 +1,7 @@
 package Kotasek.PhotoContracts.controllers;
 
 import Kotasek.PhotoContracts.dto.OrderDTO;
+import Kotasek.PhotoContracts.filter.OrderFilter;
 import Kotasek.PhotoContracts.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,9 @@ public class OrderController {
     @Autowired
     OrderService orderService;
     @GetMapping("/orders")
-    public List<OrderDTO> getOrders() {
+    public List<OrderDTO> getOrders(OrderFilter filter) {
 
-    return orderService.getAllOrders();
+    return orderService.getAllOrders(filter);
 
     }
 

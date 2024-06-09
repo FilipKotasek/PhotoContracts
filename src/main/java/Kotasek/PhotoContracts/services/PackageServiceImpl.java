@@ -5,6 +5,8 @@ import Kotasek.PhotoContracts.entities.PackageEntity;
 import Kotasek.PhotoContracts.mappers.PackageMapper;
 import Kotasek.PhotoContracts.repositories.PackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.awt.image.PackedColorModel;
@@ -45,6 +47,13 @@ public class PackageServiceImpl implements PackageService{
 
         }
         return packageDTOS;
+    }
+
+    @Override
+    public List<PackageDTO> getFilteredPackages(int limit) {
+        Page<PackageEntity> PageOfPackages = packageRepository.findAll(PageRequest.of(0,limit));
+        List<PackageEntity> result=PageOfPackages.getContent();
+        return packageMapper.toDTOS(result);
     }
 
     @Override

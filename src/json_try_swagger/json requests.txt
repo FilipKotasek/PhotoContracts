@@ -18,3 +18,15 @@ RESPONSE BODY
   "durationInHours": 4
 }
 
+PUT  /api/order/{id}
+nebo
+POST /api/order/
+{
+  "id": 0,
+  "status": false,
+  "totalPrice": 5000,
+  "orderDate": "2024-06-09",
+  "photoPackageId": 3,
+  "customerId": 3
+}
+

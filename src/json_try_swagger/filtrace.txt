@@ -1,0 +1,8 @@
+Filtrace zakázky podle
+
+- zakaznika
+- ceny
+- data
+- balíčku
+- hotové/nehotové
+

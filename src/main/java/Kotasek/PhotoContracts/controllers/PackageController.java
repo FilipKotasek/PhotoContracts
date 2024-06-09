@@ -48,6 +48,11 @@ public class PackageController {
 
     }
 
+    @GetMapping("/packages/{limit}")
+    public List<PackageDTO> getFilteredPackages(@PathVariable int limit) {
+        return packageService.getFilteredPackages(limit);
+    }
+
 
 
 

@@ -3,14 +3,20 @@ package Kotasek.PhotoContracts.services;
 import Kotasek.PhotoContracts.dto.OrderDTO;
 import Kotasek.PhotoContracts.entities.CustomerEntity;
 import Kotasek.PhotoContracts.entities.OrderEntity;
+import Kotasek.PhotoContracts.filter.OrderFilter;
 import Kotasek.PhotoContracts.mappers.OrderMapper;
 import Kotasek.PhotoContracts.repositories.CustomerRepository;
 import Kotasek.PhotoContracts.repositories.OrderRepository;
 import Kotasek.PhotoContracts.repositories.PackageRepository;
+import Kotasek.PhotoContracts.specification.OrderSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -48,10 +54,17 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<OrderDTO> getAllOrders() {
-         List<OrderEntity> AllOrdersEntities=orderRepository.findAll();
-         List<OrderDTO> ordersDTOS=orderMapper.toDTOS(AllOrdersEntities);
-        return ordersDTOS;
+    public List<OrderDTO> getAllOrders(OrderFilter filter) {
+        OrderSpecification orderSpecification=new OrderSpecification(filter);
+
+        return orderRepository.findAll(orderSpecification,PageRequest.of(0, filter.getLimit()))
+                .stream()
+                .map(orderMapper::toDTO)
+                .collect(Collectors.toList());
+
+
+
+
     }
 
     @Override
@@ -64,6 +77,8 @@ public class OrderServiceImpl implements OrderService{
     public OrderDTO editOrder(Long id, OrderDTO newData) {
         OrderEntity order=orderMapper.toEntity(newData);
         order.setId(id);
+        order.setCustomer(customerRepository.getReferenceById(newData.getCustomerId()));
+        order.setPhotoPackage(packageRepository.getReferenceById(newData.getPhotoPackageId()));
         OrderEntity saved=orderRepository.save(order);
         OrderDTO editedOrder=orderMapper.toDTO(saved);
         return editedOrder;
